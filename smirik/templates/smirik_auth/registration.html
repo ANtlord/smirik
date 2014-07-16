@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<form class="registration-form" action="{% url 'registration_url' %}" method="post">
+    {% csrf_token %}
+    <h1 align="center">Регистрация</h1>
+    {% include "blocks/error_block.html" %}
+    <ul class="i-clear-list">
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Адрес электронной почты</span>
+                {% render_field form.username|attr:"required" class+="form-control" placeholder="Адрес электронной почты" %}
+            </label>
+        </li>
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Введите пароль</span>
+                {% render_field form.password1|attr:"required" class+="form-control" placeholder="Введите пароль" %}
+            </label>
+        </li>
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Повторите пароль</span>
+                {% render_field form.password2|attr:"required" class+="form-control" placeholder="Повторите пароль" %}
+            </label>
+        </li>
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Имя администратора аккаунта</span>
+                {% render_field form.first_name|attr:"required" class+="form-control" placeholder="Имя администратора аккаунта" %}
+            </label>
+        </li>
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Фамилия администратора аккаунта</span>
+                {% render_field form.last_name|attr:"required" class+="form-control" placeholder="Фамилия администратора аккаунта" %}
+            </label>
+        </li>
+        <li class="registration-form-item">
+            <button class="btn btn-lg btn-success btn-block" type="submit">Зарегистрироваться</button>
+        </li>
+    </ul>
+</form>
+{% endblock %}

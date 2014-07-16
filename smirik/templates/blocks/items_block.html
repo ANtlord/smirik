@@ -1,0 +1,61 @@
+{% load widget_tweaks %}
+{% load thumbnail %}
+<form action="." method="post" class="formset_categories">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <ul class="sections-list i-clear-list">
+        {% for item in formset  %}
+            <li class="sections-list-item i-left well well-sm">
+                <div class="section-image">
+                    {% if item.instance.image %}
+                        {% thumbnail item.instance.image "180x160" crop="center" as p_im %}
+                            <img src="{{ p_im.url }}" alt="{{ item.instance.name }}" />
+                        {% endthumbnail %}
+                    {% else %}
+                        {% thumbnail item.instance.letter_image "180x160" crop="center" as p_im %}
+                            <img src="{{ p_im.url }}" alt="{{ item.instance.name }}" />
+                        {% endthumbnail %}
+                    {% endif %}
+                </div>
+                <a href="{% url type item.instance.pk %}">
+                    <div class="sections-list-item__title">
+                        <div class="sections-list-item__title-base label label-info">
+                            <div class="sections-list-item__title-content">
+                                {{ item.instance.name }}
+                                <span class="badge">{{ item.instance.items.prefetch_related.count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {{ item.id }}
+                {% render_field item.sort class+="form-control sections-list-item__sort-control" %}
+                {% render_field item.DELETE class+="delete-widget i-hide" %}
+                {% render_field item.is_checked class+="sections-list-item-form__cb i-hide" %}
+                <a href="#" class="sections-list-item__control btn btn-danger delete-btn delete-btn_categories">
+                    Удалить
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="i-clear"></div>
+    <div class="footer-panel_apply navbar-inverse i-hide">
+        <div class="footer-panel-form">
+            <input type="submit" class="btn btn-primary footer-panel_apply__apply" value="Применить изменения" name="save" />
+            <a href="#" class="btn btn-default footer-panel_apply__reset">
+                Отменить изменения
+            </a>
+        </div>
+        <div class="i-clear"></div>
+    </div>
+    <div class="footer-panel navbar-inverse i-hide">
+        <div class="footer-panel__caption">
+            Выделенные объекты
+        </div>
+        <div class="footer-panel-form">
+            <input type="submit" class="btn btn-default" value="Активировать" name="enable" />
+            <input type="submit" class="btn btn-warning" value="Деактивировать" name="disable" />
+            <input type="submit" class="btn btn-danger" value="Удалить" name="delete" />
+        </div>
+        <div class="i-clear"></div>
+    </div>
+</form>

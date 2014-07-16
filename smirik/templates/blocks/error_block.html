@@ -1,0 +1,7 @@
+{% if form.errors %}
+    <div class="alert alert-danger">
+        {% for key, value in form.errors.iteritems %}
+            {{value}}
+        {% endfor %}
+    </div>
+{% endif %}

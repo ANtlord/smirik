@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<form class="registration-form" action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <h1 align="center">Вход</h1>
+    {% include "blocks/error_block.html" %}
+    <ul class="registration-form-list">
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Электронная почта</span>
+                {% render_field form.username|attr:"required autofocus" class+="form-control" placeholder="Электронная почта" %}
+            </label>
+        </li>
+        <li class="registration-form-item">
+            <label class="registration-form-label">
+                <span class="registration-form-label-span">Пароль</span>
+                {% render_field form.password|attr:"required" class+="form-control" placeholder="Пароль" %}
+            </label>
+        </li>
+        <input type="hidden" name="next" value="{{ next }}">
+        <li class="registration-form-item">
+            <button class="btn btn-lg btn-success btn-block" type="submit">Вход</button>
+        </li>
+    </ul>
+</form>
+{% endblock %}

@@ -1,0 +1,439 @@
+/* Space out content a bit */
+body {
+    font-size: 16px;
+}
+body, html, .container {
+    height: 100%;
+}
+.container {
+    margin-top: -94px;
+}
+.content {
+    min-height: 100%;
+    padding-bottom: 20px;
+}
+.content-top {
+    position: relative;
+    width: 100%;
+}
+.header-blank { height: 70px; }
+.footer-blank { height: 60px; }
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header94.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+    border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+    margin-top:-60px;
+    height: 60px;
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+.sections-list-item__sort-control {
+    margin-top: 10px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.registration-form-list {
+    list-style-type: none;
+    margin:auto;
+    padding:0;
+    max-width: 500px;
+    width: 80%;
+}
+.registration-form-item {
+    margin: 10px 0;
+}
+
+.registration-form-item, .registration-form-label {
+    width: 100%;
+}
+
+.registration-form-label-span {
+    display: block;
+}
+.registration-form-list .form-control::-moz-placeholder {
+    color: #fff;
+}
+.registration-form-list .form-control::-webkit-input-placeholder {
+    color: #fff;
+}
+.registration-form-list .form-control::input-placeholder {
+    color: #fff;
+}
+.company-info-item {
+    line-height: 30px;
+}
+.content-top-portrait_thumb, .content-top-portrait_logo {
+    width: 200px;
+    height: 200px;
+    overflow:hidden;
+}
+.content-top-portrait_thumb {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 195px;
+    color: white;
+}
+
+.company-info {
+    list-style-type: none;
+}
+.company-info-base {
+    display: table-cell;
+    vertical-align: middle;
+    height:200px;
+}
+.middle-panel {
+    margin-top: 20px;
+    width: 100%;
+}
+.middle-panel-item {
+    width: 33.3333%;
+    padding: 0 10px;
+}
+.middle-panel-item-link {
+    width: 100%;
+}
+.middle-panel-item:first-child { padding-left:0px; }
+.middle-panel-item:last-child { padding-right:0px; }
+.phone-menu-base {
+    width:300px;
+}
+.phone-edit-base {
+    margin-left: 330px;
+}
+.phone-edit {
+    position: relative;
+}
+.phone-edit:after {
+    margin-bottom: -35px;
+}
+.phone-edit-phone-list {
+    overflow: hidden;
+}
+.phone-field {
+    width: 211px;
+}
+.delete-btn, .sort-field {
+    text-align: center;
+    float:right;
+    width: 52px;
+    margin-left: 10px;
+}
+.phone-field {
+    float:left;
+    margin-bottom: 10px;
+}
+.company-phone-item {
+}
+.phone-edit-addphone {
+    text-align: center;
+}
+.phone-edit__save-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 8px 15px;
+}
+.sections-list {
+    margin-left: -50px;
+}
+.sections-list-item {
+    width: 200px;
+    height: 310px;
+    margin-left: 50px;
+    margin-bottom: 25px;
+    position: relative;
+}
+.sections-list-item__title, .section-image, .holder {
+    width: 180px;
+    max-width: 180px;
+}
+.sections-list-item__title {
+    text-align: center;
+    height: 40px;
+    max-height: 40px;
+    position:relative;
+}
+.sections-list-item__title-base {
+    overflow: hidden;
+    white-space: normal;
+    position:absolute;
+    border-radius: 0;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:0px;
+}
+.sections-list-item__title-content {
+    padding: 0 3px;
+    text-align: center;
+    width: 180px;
+    display:table-cell;
+    vertical-align: middle;
+    height: 40px;
+}
+.sections-list-item__control {
+    width: 100%;
+    margin: 10px 0px;
+}
+.section-image {
+    height: 160px;
+    overflow: hidden;
+}
+.holder__thumbnail {
+    margin-top: -50px;
+}
+.holder {
+    color: white;
+    font-size: 165px;
+    text-align:center;
+    height: 160px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+}
+.selected-item {
+    background: #666;
+}
+.footer-panel, .footer-panel_apply {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left:0;
+    color: white;
+    padding: 5px;
+}
+.footer-panel__caption {
+    float:left;
+    line-height: 32px;
+}
+.footer-panel-form {
+    text-align:right;
+}
+.item-info-base {
+    width: 100%;
+    padding-left: 200px;
+}
+.item-edition-list-item {
+    margin: 0px 0px 12px 20px;
+}
+.addbtn {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+.popup-goods-base {
+    margin-left: 92px;
+    position:relative;
+}
+#popup-goods {
+    border: 1px solid rgb(204, 204, 204);
+    background: white;
+    position:absolute;
+    left:0px;
+    right: 0px;
+    top: -1px;
+    z-index: 10;
+    opacity: 0;
+}
+.popup-goods-item:hover { 
+    background: lightblue;
+    color: white;
+}
+.popup-goods-item {
+    cursor: pointer;
+    line-height: 36px;
+    padding-left: 10px;
+}
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    .registration-form-label-span {
+        display: none;
+    }
+    .registration-form-list .form-control::-moz-placeholder {
+        color: gray;
+    }
+    .registration-form-list .form-control::-webkit-input-placeholder {
+        color: gray;
+    }
+    .registration-form-list .form-control::input-placeholder {
+        color: gray;
+    }
+    .company-info {
+        margin-left: 0;
+        padding-left: 10px;
+    }
+    .company-info-item {
+        line-height:22.85px;
+    }
+    .phone-field {
+        width: 100%;
+    }
+    .sort-field {
+        float:left;
+        margin:0px 0px 10px;
+        width: 48%;
+    }
+    .delete-btn {
+        margin: 0;
+        width: 48%;
+    }
+}
+.list-group-base {
+    float: left;
+}
+@media (max-width: 600px) {
+    .list-group-base {
+        float:none;
+    }
+    .phone-menu-base {
+        width: 100%;
+    }
+    .phone-edit-base {
+        margin-left: 30px;
+    }
+    .footer-panel__caption {
+        line-height: 32px;
+        float:none;
+        text-align: center;
+    }
+    .footer-panel-form {
+        text-align:center;
+    }
+}
+@media (max-width: 480px) {
+    .content-top-portrait_thumb, .content-top-portrait_logo, .content-top-info {
+        margin: auto;
+    }
+    .company-info-base {
+        text-align: center;
+        margin: 20px auto;
+        display:block;
+        height:auto;
+    }
+    .content-top .i-left {
+        float:none;
+    }
+    .middle-panel .i-left {
+        float: none;
+    }
+    .middle-panel-item {
+        width: 100%;
+        padding: 10px 0px;
+    }
+    body {
+        min-width:300px;
+        min-width:300px;
+    }
+    .sections-list {
+        margin-left: 0px;
+    }
+    .sections-list-item {
+        margin-left: 3%;
+        margin-bottom: 5px;
+    }
+}

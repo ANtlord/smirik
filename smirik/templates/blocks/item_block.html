@@ -1,0 +1,106 @@
+{% load l10n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+<div class="content-top-portrait_logo i-left">
+    {% if object.image %}
+        {% thumbnail object.image "200x200" as im %}
+            <img src="{{ im.url }}" alt="{{ object.name }}"/>
+        {% endthumbnail %}
+    {% else %}
+        {% thumbnail object.letter_image "200x200" as im %}
+            <img src="{{ im.url }}" alt="{{ object.name }}"/>
+        {% endthumbnail %}
+    {% endif %}
+</div>
+<div class="content-top-info">
+    <div class="item-info-base">
+        {% if type == "company" %}
+            <form action="{% url 'account' %}" method="post" enctype="multipart/form-data">
+        {% elif type == "product" %}
+            {% if object.pk %}
+                <form action="{% url 'product' object.pk %}" method="post" enctype="multipart/form-data">
+            {% else %}
+                <form action="{% url 'add_product' %}" method="post" enctype="multipart/form-data">
+            {% endif %}
+            <input type="hidden" name="{{ form.background.name }}" value="{{ form.background.value }}" />
+        {% else %}
+            {% if object.pk %}
+                <form action="{% url 'category' object.pk %}" method="post" enctype="multipart/form-data">
+            {% else %}
+                <form action="{% url 'add_category' %}" method="post" enctype="multipart/form-data">
+            {% endif %}
+            <input type="hidden" name="{{ form.company.name }}" value="{{ user.company_id }}" />
+        {% endif %}
+            <input type="hidden" name="{{ form.background.name }}" value="{{ form.background.value }}" />
+            {% csrf_token %}
+            <ul class="item-edition-list i-clear-list">
+                <li class="item-edition-list-item">
+                    <div class="input-group">
+                        <span class="input-group-addon">Название</span>
+                        {% render_field form.name|attr:"required autofocus" class+="form-control" placeholder="Название" %}
+                    </div>
+                </li>
+                <li class="item-edition-list-item">
+                    <div class="input-group">
+                        <span class="input-group-addon">Краткое описание</span>
+                        {% render_field form.short_text class+="form-control" placeholder="Краткое описание" %}
+                    </div>
+                </li>
+                {% if type != "category" %}
+                    <li class="item-edition-list-item">
+                        <div class="input-group">
+                            <span class="input-group-addon">Описание</span>
+                            {% render_field form.text class+="form-control" placeholder="Описание" %}
+                        </div>
+                    </li>
+                    <li class="item-edition-list-item">
+                        <div class="input-group">
+                            <span class="input-group-addon">{{ category_name }}</span>
+                            {% render_field form.section class+="form-control" placeholder="Индустрия" %}
+                        </div>
+                    </li>
+                {% endif %}
+                {% if type == "product" or type == "category"  %}
+                    <li class="item-edition-list-item">
+                        <div class="input-group">
+                            <span class="input-group-addon">Индекс сортировки</span>
+                            {% render_field form.sort class+="form-control" placeholder="Индекс сортировки" %}
+                        </div>
+                    </li>
+                {% endif %}
+                {% if type == "product" %}
+                    <li class="item-edition-list-item">
+                        <div class="input-group">
+                            <span class="input-group-addon">Цена</span>
+                            {% render_field form.price class+="form-control" placeholder="Цена" %}
+                            <span class="input-group-addon">руб.</span>
+                        </div>
+                    </li>
+                {% elif type == "company" %}
+                    <li class="item-edition-list-item">
+                        <div class="input-group">
+                            <span class="input-group-addon">{{ form.address.label }}</span>
+                            {% render_field form.address class+="form-control" placeholder=form.address.label %}
+                        </div>
+                        <small>{{ form.address.help_text }}</small>
+                    </li>
+                    <li class="item-edition-list-item">
+                        <span class="company-info-item-caption text-muted">Дата регистрации:</span>
+                        {{ object.created_at.date|localize }}
+                    </li>
+                {% endif %}
+                <li class="item-edition-list-item i-hide">
+                    {% render_field form.image class+="file-input" %}
+                </li>
+                <li class="item-edition-list-item">
+                    <button class="btn btn-default file-pseudo-input">
+                        Измененить изображение
+                    </button>
+                    <input type="submit" type="button" class="btn btn-success"
+                        name="categorySubmit" value="Сохранить изменения" />
+                </li>
+                <li class="item-edition-list-item file-input-value help-block"></li>
+            </ul>
+        </form>
+    </div>
+</div>

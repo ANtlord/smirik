@@ -1,0 +1,11 @@
+.venv
+*.pyc
+static/admin
+upload/
+__pycache__
+smirik/local_settings.py
+xapian
+.venv
+dump.rdb
+public
+db.sqlite3

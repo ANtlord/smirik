@@ -1,0 +1,23 @@
+.i-inline { display: inline-block; }
+.i-clear { clear: both; }
+.i-hide { display: none; }
+.i-left { float: left; }
+.i-right { float: right; }
+.i-clear-list { list-style-type: none; }
+.i-padding0 { padding:0; }
+.i-margin0 { margin:0; }
+.i-biggest-text { font-size:32px; }
+.i-relative { position: relative; }
+.i-absolute { position: absolute; }
+.i-center { text-align: center; }
+.i-text-left { text-align: left; }
+.i-text-right { text-align: right; }
+.i-rt { top: 0; right: 0; }
+.i-lt { top: 0; left: 0; }
+.i-rb { right: 0; bottom: 0; }
+.i-full-width { width: 100%; }
+.i-table { display: table; }
+.i-cell { display: table-cell; }
+.i-row { display: table-row; }
+.i-paddingt10{ padding-top: 10px; }
+.i-white { color: white; }

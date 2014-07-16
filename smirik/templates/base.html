@@ -1,0 +1,46 @@
+{% load compress %}
+{% load sitetree %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Onetap{% endblock %}</title>
+        {% compress css %}
+        <link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}css/i-style.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}css/style.css" rel="stylesheet">
+        {% endcompress %}
+    </head>
+    <body>
+        <div class="navbar navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Onetap</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                {% sitetree_menu from "top_menu" include 'trunk' template "sitetree/top_menu.html" %}
+            </div>
+        </div>
+        <div class="container">
+            <div class="content">
+                <div class="header-blank"></div>
+                    {% block content %}{% endblock %}
+                <div class="footer-blank"></div>
+            </div><!-- /content -->
+            <div class="footer"></div>
+        </div>
+        <div class="scripts">
+            {% compress js %}
+                <script src="{{STATIC_URL}}js/jquery-1.10.2.min.js"></script>
+                <script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+            {% endcompress %}
+        </div>
+    </body>
+</html>
