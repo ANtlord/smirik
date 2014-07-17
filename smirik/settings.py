@@ -61,9 +61,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'smirik.apps.smirik_auth',
+    'smirik.apps.pages',
     'compressor',
+    'ckeditor',
     'widget_tweaks',
     'south',
     'sitetree',
@@ -146,3 +147,12 @@ TEMPLATE_DIRS = (
 LOGIN_REDIRECT_URL = '/account/'
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, 'user')
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'autoParagraph': False
+    }
+}
