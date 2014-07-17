@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'smirik.apps.smirik_auth',
     'smirik.apps.pages',
+    'smirik.apps.financeapp',
     'compressor',
     'ckeditor',
     'widget_tweaks',

@@ -1,0 +1,24 @@
+{% load compress %}
+{% extends "base.html" %}
+{% block content %}
+<h1>Личный кабинет {{ object }}</h1>         
+<h2>Ваше портфолио</h2>
+{% if object.items.prefetch_related %}
+    <ul>
+        {% for item in object.items.prefetch_related %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>   
+{% else %}
+    <span class="text-muted">
+        У Вас нет стоков.
+    </span>
+{% endif %}
+
+{% endblock content %}
+{% block script %}
+    {% compress js %}
+        <script src="{{STATIC_URL}}js/angular.min.js"></script>
+        <script src="{{STATIC_URL}}js/angular-resource.min.js"></script>
+    {% endcompress %}
+{% endblock script %}
