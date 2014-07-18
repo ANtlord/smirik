@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, url
-from django.contrib.admin.views.decorators import staff_member_required
 from .views import UserCreationView
 from .views import UserDetailView
 from django.contrib.auth.decorators import login_required

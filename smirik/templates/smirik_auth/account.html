@@ -1,24 +1,28 @@
-{% load compress %}
 {% extends "base.html" %}
+{% load compress %}
 {% block content %}
 <h1>Личный кабинет {{ object }}</h1>         
 <h2>Ваше портфолио</h2>
-{% if object.items.prefetch_related %}
-    <ul>
-        {% for item in object.items.prefetch_related %}
-            <li>{{ item }}</li>
-        {% endfor %}
-    </ul>   
-{% else %}
-    <span class="text-muted">
-        У Вас нет стоков.
-    </span>
-{% endif %}
+<div ng-app="App">
+    {% if object.items.prefetch_related %}
+        <ul ng-controller="StockController">
+            <li ng-repeat="item in stocks">
+                {{ item.Symbol }}
+            </li>
+        </ul>   
+    {% else %}
+        <span class="text-muted">
+            У Вас нет стоков.
+        </span>
+    {% endif %}
+</div>
 
 {% endblock content %}
 {% block script %}
     {% compress js %}
         <script src="{{STATIC_URL}}js/angular.min.js"></script>
         <script src="{{STATIC_URL}}js/angular-resource.min.js"></script>
+        <script src="{{STATIC_URL}}js/app.js"></script>
+        <script src="{{STATIC_URL}}js/controllers.js"></script>
     {% endcompress %}
 {% endblock script %}
