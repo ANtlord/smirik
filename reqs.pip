@@ -1,5 +1,5 @@
 Django==1.6.5
-South==1.0
+South==0.8.3
 django-compressor==1.4
 django-sitetree==1.0.0
 django-widget-tweaks==1.3

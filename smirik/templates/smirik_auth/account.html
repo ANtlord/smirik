@@ -4,17 +4,30 @@
 <h1>Личный кабинет {{ object }}</h1>         
 <h2>Ваше портфолио</h2>
 <div ng-app="App">
-    {% if object.items.prefetch_related %}
-        <ul ng-controller="StockController">
-            <li ng-repeat="item in stocks">
-                {{ item.Symbol }}
-            </li>
-        </ul>   
-    {% else %}
-        <span class="text-muted">
-            У Вас нет стоков.
-        </span>
-    {% endif %}
+    {% verbatim %}
+        <div ng-controller="StockCtrl">
+            <div ng-if="stocks">
+                <table class="table">
+                    <tr>
+                        <th ng-repeat="item in stock_fields">{{ item }}</th>
+                    </tr>
+                    <tr ng-repeat="entry in stocks">
+                        <td ng-repeat="item in stock_fields">{{ entry[item] }}</td>
+                    </tr>
+                </table>
+                <!--<ul>-->
+                    <!--<li ng-repeat="item in stocks">-->
+                        <!--{{ item }}-->
+                    <!--</li>-->
+                <!--</ul>-->
+            </div>
+            <div ng-if="message">
+                <span class="text-muted">
+                    {{ message }}
+                </span>
+            </div>
+        </div>
+    {% endverbatim %}
 </div>
 
 {% endblock content %}
@@ -22,7 +35,7 @@
     {% compress js %}
         <script src="{{STATIC_URL}}js/angular.min.js"></script>
         <script src="{{STATIC_URL}}js/angular-resource.min.js"></script>
-        <script src="{{STATIC_URL}}js/app.js"></script>
-        <script src="{{STATIC_URL}}js/controllers.js"></script>
     {% endcompress %}
+        <script src="{{STATIC_URL}}js/controllers.js"></script>
+        <script src="{{STATIC_URL}}js/app.js"></script>
 {% endblock script %}
