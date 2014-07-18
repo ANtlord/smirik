@@ -8,6 +8,7 @@ from django.views.generic import CreateView
 from django.views.generic import DetailView
 from .forms import UserCreationForm
 from django.conf import settings
+from smirik.apps.financeapp.forms import StockForm
 
 class UserViewMixin(object):
     user_id = None
@@ -42,3 +43,8 @@ class UserDetailView(UserViewMixin, DetailView):
         Method for get instance of model "User"
         """
         return get_object_or_404(self.model, pk=self.user_id)
+
+    def get_context_data(self, **kwargs):
+        ctx = super(UserDetailView, self).get_context_data(**kwargs)
+        ctx['form'] = StockForm()
+        return ctx

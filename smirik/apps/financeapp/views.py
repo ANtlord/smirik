@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse
 from smirik.apps.smirik_auth.views import UserFormViewMixin
 from smirik.apps.smirik_auth.views import UserViewMixin
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import ListView
 from .forms import StockForm
 from .models import Stock
@@ -12,12 +13,29 @@ import urllib.parse
 import json
 STOCK_FIELDS = ['Ask', 'Change', 'Open', 'DaysHigh', 'DaysLow']
 
-class StockCreateView(CreateView, UserFormViewMixin):
+class StockCreateView(UserFormViewMixin, CreateView):
     """Class for creation stock"""
     form_class = StockForm
+    template_name = 'empty.html'
 
-    def get(self, request, *args, **kwargs):
-        raise Http404
+    def form_valid(self, form):
+        res = super(StockCreateView, self).form_valid(form)
+        return HttpResponse('OK')
+
+    def form_invalid(self, form):
+        res = super(StockCreateView, self).form_invalid(form)
+        return HttpResponse(json.dumps(form._errors),
+                'application/json; charset=UTF-8')
+
+    def get_success_url(self):
+        return '/account/'
+
+
+class StockDeleteView(DeleteView):
+    model = Stock
+        
+    def get_success_url(self):
+        return '/account/'
 
 
 class StockListView(UserViewMixin, ListView):
@@ -45,13 +63,15 @@ class StockListView(UserViewMixin, ListView):
         if self.object_list:
             if type(stocks['query']['results']['quote']) == dict:
                 stocks['query']['results']['quote'].update({
-                    'Symbol' : self.object_list[0].name
+                    'Symbol' : self.object_list[0].name,
+                    'pk' : self.object_list[0].pk
                 })
                 result_array.append(stocks['query']['results']['quote'])
             else:
                 i=0
                 for item in stocks['query']['results']['quote']:
                     item['Symbol'] = self.object_list[i].name
+                    item['pk'] = self.object_list[i].pk
                     i+=1
                     result_array.append(item)
 

@@ -1,18 +1,29 @@
 {% extends "base.html" %}
 {% load compress %}
+{% load widget_tweaks %}
 {% block content %}
 <h1>Личный кабинет {{ object }}</h1>         
 <h2>Ваше портфолио</h2>
 <div ng-app="App">
-    {% verbatim %}
         <div ng-controller="StockCtrl">
+            {% verbatim %}
             <div ng-if="stocks">
                 <table class="table">
                     <tr>
                         <th ng-repeat="item in stock_fields">{{ item }}</th>
+                        <th>X</th>
                     </tr>
                     <tr ng-repeat="entry in stocks">
                         <td ng-repeat="item in stock_fields">{{ entry[item] }}</td>
+                        <td>
+                            <form class="del-form-{{ entry.pk }}" action="/stock-delete/" data-id="{{ entry.pk }}"
+                                method="post">
+                                <button class="btn btn-danger btn-xs del-btn"
+                                    ng-click="delStock(entry.pk)" onClick="return false;">
+                                    Del {{ entry.pk }}
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </table>
                 <!--<ul>-->
@@ -26,8 +37,18 @@
                     {{ message }}
                 </span>
             </div>
+            {% endverbatim %}
+            <div class="form-inline">
+                <form action="{% url 'stock_create' %}" class="stock-form" method="post">
+                    {% csrf_token %}
+                    {% render_field form.name|add_class:"form-control" %}
+                    <button class="btn btn-success stock-form_btn" ng-click="addStock()"
+                        onClick="return false;">
+                        Добавить
+                    </button>
+                </form>
+            </div>
         </div>
-    {% endverbatim %}
 </div>
 
 {% endblock content %}
@@ -35,7 +56,7 @@
     {% compress js %}
         <script src="{{STATIC_URL}}js/angular.min.js"></script>
         <script src="{{STATIC_URL}}js/angular-resource.min.js"></script>
-    {% endcompress %}
         <script src="{{STATIC_URL}}js/controllers.js"></script>
         <script src="{{STATIC_URL}}js/app.js"></script>
+    {% endcompress %}
 {% endblock script %}
