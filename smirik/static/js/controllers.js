@@ -52,10 +52,7 @@ angular.module('App.Controllers', []).
         $scope.delStock = function(entryPk){
             var form = jQuery('.del-form-'+entryPk);
             console.log(form.serialize());
-            $.post(form.attr('action')+form.data('id')+'/', form.serialize(),
-                function (data, textStatus, jqXHR) {
-                    // success callback
-                }
-            );
+            $.post(form.attr('action')+form.data('id')+'/', form.serialize(), function(data){});
+            getStocks();
         }
     }]);
