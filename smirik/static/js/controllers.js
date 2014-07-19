@@ -49,10 +49,37 @@ angular.module('App.Controllers', []).
                 }
             );
         }
+
         $scope.delStock = function(entryPk){
             var form = jQuery('.del-form-'+entryPk);
-            console.log(form.serialize());
             $.post(form.attr('action')+form.data('id')+'/', form.serialize(), function(data){});
             getStocks();
+        }
+
+        $scope.getStockHistory = function(id){
+            $http.get('/stock-detail/'+id+'/').
+                success(function(data, status, headers, config) {
+                    var points = [];
+                    var xCaptions = [];
+                    var max = null;
+                    var N = data.length;
+                    for (var i=0; i<N; ++i){
+                        points.push([i, data[N-1-i].Close]);
+                        if (i%3 == 0) xCaptions.push([i, data[N-1-i].Date]);
+                        if (max == null) max = data[i].Close;
+                        else if (max < data[i].Close) max = data[i].Close;
+                    }
+                    jQuery.plot(jQuery('#plot-base'), [points], {
+                        yaxis: {
+                            max: max 
+                        },
+                        xaxis: {
+                            ticks: xCaptions
+                        }
+                    });
+                }).
+                error(function(data, status, headers, config) {
+                    alert('something wrong');
+                }); 
         }
     }]);

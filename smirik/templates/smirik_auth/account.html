@@ -5,45 +5,55 @@
 <h1>Личный кабинет {{ object }}</h1>         
 <h2>Ваше портфолио</h2>
 <div ng-app="App">
-        <div ng-controller="StockCtrl">
-            {% verbatim %}
-            <div ng-if="stocks">
-                <table class="table">
-                    <tr>
-                        <th ng-repeat="item in stock_fields">{{ item }}</th>
-                        <th>X</th>
-                    </tr>
-                    <tr ng-repeat="entry in stocks">
-                        <td ng-repeat="item in stock_fields">{{ entry[item] }}</td>
-                        <td>
-                            <form class="del-form-{{ entry.pk }}" action="/stock-delete/" data-id="{{ entry.pk }}"
-                                method="post">
-                                <button class="btn btn-danger btn-xs del-btn"
-                                    ng-click="delStock(entry.pk)" onClick="return false;">
-                                    Del
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div ng-if="message">
-                <span class="text-muted">
-                    {{ message }}
-                </span>
-            </div>
-            {% endverbatim %}
-            <div class="form-inline">
-                <form action="{% url 'stock_create' %}" class="stock-form" method="post">
-                    {% csrf_token %}
-                    {% render_field form.name|add_class:"form-control" %}
-                    <button class="btn btn-success stock-form_btn" ng-click="addStock()"
-                        onClick="return false;">
-                        Добавить
-                    </button>
-                </form>
-            </div>
+    <div ng-controller="StockCtrl">
+        {% verbatim %}
+        <div ng-if="stocks">
+            <table class="table">
+                <tr>
+                    <th ng-repeat="item in stock_fields">{{ item }}</th>
+                    <th>X</th>
+                </tr>
+                <tr ng-repeat="entry in stocks">
+                    <td ng-repeat="item in stock_fields">
+                        <span ng-if="item == 'Symbol'">
+                            <a href="#" ng-click="getStockHistory(entry.pk)" onClick="return false;">
+                                {{ entry[item] }}
+                            </a>
+                        </span>
+                        <span ng-if="item != 'Symbol'">
+                            {{ entry[item] }}
+                        </span>
+                    </td>
+                    <td>
+                        <form class="del-form-{{ entry.pk }}" action="/stock-delete/" data-id="{{ entry.pk }}"
+                            method="post">
+                            <button class="btn btn-danger btn-xs del-btn"
+                                ng-click="delStock(entry.pk)" onClick="return false;">
+                                Del
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
         </div>
+        <div ng-if="message">
+            <span class="text-muted">
+                {{ message }}
+            </span>
+        </div>
+        {% endverbatim %}
+        <div class="form-inline">
+            <form action="{% url 'stock_create' %}" class="stock-form" method="post">
+                {% csrf_token %}
+                {% render_field form.name|add_class:"form-control" %}
+                <button class="btn btn-success stock-form_btn" ng-click="addStock()"
+                    onClick="return false;">
+                    Добавить
+                </button>
+            </form>
+        </div>
+    </div>
+    <div id="plot-base" style="height: 300px;"></div>
 </div>
 
 {% endblock content %}
@@ -53,5 +63,6 @@
         <script src="{{STATIC_URL}}js/angular-resource.min.js"></script>
         <script src="{{STATIC_URL}}js/controllers.js"></script>
         <script src="{{STATIC_URL}}js/app.js"></script>
+        <script src="{{STATIC_URL}}js/jquery.flot.min.js"></script>
     {% endcompress %}
 {% endblock script %}
