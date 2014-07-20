@@ -77,6 +77,7 @@ angular.module('App.Controllers', []).
                             ticks: xCaptions
                         }
                     });
+                    jQuery.plot('.plot-times').removeClass('i-hide');
                 }).
                 error(function(data, status, headers, config) {
                     alert('something wrong');

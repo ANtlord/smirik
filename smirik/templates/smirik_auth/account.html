@@ -54,6 +54,23 @@
         </div>
     </div>
     <div id="plot-base" style="height: 300px;"></div>
+    <div id="plot-times">
+        <ul class="i-clear-list i-padding0 i-hide">
+            <li class="i-left i-padding5">
+                <a href="#" ng-click="getStockHistory(1)" onClick="return false;">1 день</a>
+            </li>
+            <li class="i-left i-padding5">
+                <a href="#" ng-click="getStockHistory(5)" onClick="return false;">5 дней</a>
+            </li>
+            <li class="i-left i-padding5">
+                <a href="#" ng-click="getStockHistory(182)" onClick="return false;">6 месяцев</a>
+            </li>
+            <li class="i-left i-padding5">
+                <a href="#" ng-click="getStockHistory(365)" onClick="return false;">1 год</a>
+            </li>
+        </ul>
+    </div>
+    
 </div>
 
 {% endblock content %}
