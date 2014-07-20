@@ -157,7 +157,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 try:
-    from local_settings import *
+    from smirik.local_settings import *
 except ImportError: pass
 
 TEMPLATE_DEBUG = DEBUG
