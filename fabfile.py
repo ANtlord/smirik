@@ -20,7 +20,7 @@ env.use_ssh_config = True
 env.hosts = ['onetap@one-tap.ru']
 env.path = BASE_DIR+".venv/bin/activate"
 
-root_dir = '/www/test/'
+root_dir = '/www/smirik/'
 PRODUCTION = {
         'root_dir': root_dir,
         'env_script': '%s/.venv/bin/activate' % root_dir,
