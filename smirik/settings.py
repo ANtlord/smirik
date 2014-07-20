@@ -23,7 +23,6 @@ SECRET_KEY = '-+$r2_euhdu-t%q$$5vzmpjcb!hp$xw!u06=62i+at#8mnk%%c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = DEBUG
 AUTH_USER_MODEL = 'smirik_auth.User'
 ALLOWED_HOSTS = []
 
@@ -157,3 +156,8 @@ CKEDITOR_CONFIGS = {
         'autoParagraph': False
     }
 }
+try:
+    from local_settings import *
+except ImportError: pass
+
+TEMPLATE_DEBUG = DEBUG
