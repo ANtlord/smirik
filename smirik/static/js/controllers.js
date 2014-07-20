@@ -25,6 +25,8 @@ angular.module('App.Controllers', []).
         }
         getStocks();
 
+        $scope.currentStockID = null;
+
         $scope.addStock = function(){
             var form = jQuery('.stock-form');
             jQuery.post(form.attr('action'), form.serialize(),
@@ -56,8 +58,8 @@ angular.module('App.Controllers', []).
             getStocks();
         }
 
-        $scope.getStockHistory = function(id){
-            $http.get('/stock-detail/'+id+'/').
+        function _getStockHistory(address) {
+            $http.get(address).
                 success(function(data, status, headers, config) {
                     var points = [];
                     var xCaptions = [];
@@ -77,10 +79,43 @@ angular.module('App.Controllers', []).
                             ticks: xCaptions
                         }
                     });
-                    jQuery.plot('.plot-times').removeClass('i-hide');
+                    jQuery('.plot-times').removeClass('i-hide');
                 }).
                 error(function(data, status, headers, config) {
                     alert('something wrong');
-                }); 
+                });
         }
+
+        $scope.getStockHistoryByDates = function(id, startDate, endDate){
+            _getStockHistory('/stock-detail/'+id+'/?startDate='+startDate
+                             +'&endDate='+endDate);
+        }
+
+        $scope.getStockHistory = function(id){
+            _getStockHistory('/stock-detail/'+id+'/');
+            $scope.currentStockID = id;
+        }
+        
+        MONTH_NAMES = ['янв', 'фев', 'март', 'апр', 'май', 'июнь', 'июль', 'авг', 'сент', 'окт', 'ноя', 'дек'];
+        function getLastMonths() {
+            var lastMonth = new Date().getMonth();
+            var LAST_MONTHS = 12;
+            var months = [];
+            for (var i=1; i<LAST_MONTHS; ++i){
+                var date = new Date('2014-'+lastMonth+'-1');
+                date.setMonth(lastMonth-i);
+                var N = date.getMonth();
+                var endDate = new Date(date)
+                endDate.setMonth(N+1)
+                months.push({
+                    id: N,
+                    label: MONTH_NAMES[N]+" "+date.getFullYear(),
+                    startDate: date.toISOString().substring(0, 10),
+                    endDate: endDate.toISOString().substring(0, 10)
+                });
+            }
+            console.log(months);
+            return months;
+        }
+        $scope.months = getLastMonths();
     }]);

@@ -52,24 +52,21 @@
                 </button>
             </form>
         </div>
+        {% verbatim %}
+        <div id="plot-base" style="height: 300px;"></div>
+        <div class="plot-times i-hide">
+            <ul class="i-clear-list i-padding0 date-list">
+                <li class="i-left date-list_item" ng-repeat="item in months">
+                    <a href="#" onClick="return false;"
+                        ng-click="getStockHistoryByDates(currentStockID, item.startDate, item.endDate)">
+                        {{ item.label }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% endverbatim %}
     </div>
-    <div id="plot-base" style="height: 300px;"></div>
-    <div id="plot-times">
-        <ul class="i-clear-list i-padding0 i-hide">
-            <li class="i-left i-padding5">
-                <a href="#" ng-click="getStockHistory(1)" onClick="return false;">1 день</a>
-            </li>
-            <li class="i-left i-padding5">
-                <a href="#" ng-click="getStockHistory(5)" onClick="return false;">5 дней</a>
-            </li>
-            <li class="i-left i-padding5">
-                <a href="#" ng-click="getStockHistory(182)" onClick="return false;">6 месяцев</a>
-            </li>
-            <li class="i-left i-padding5">
-                <a href="#" ng-click="getStockHistory(365)" onClick="return false;">1 год</a>
-            </li>
-        </ul>
-    </div>
+    
     
 </div>
 

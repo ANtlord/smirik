@@ -437,3 +437,8 @@ body, html, .container {
         margin-bottom: 5px;
     }
 }
+.date-list_item {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px;
+}
