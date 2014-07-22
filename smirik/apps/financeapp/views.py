@@ -151,7 +151,7 @@ class StockDetailView(DetailView, APIMixin):
         startDate = request.GET.get('startDate', datetime.date.today().replace(month=lastMonth).__str__());
         endDate = request.GET.get('endDate', datetime.date.today().__str__());
 
-        fields = ", ".join(['Date', 'Volume', 'Close'])
+        fields = ", ".join(['Date', 'Volume', 'Adj_Close'])
         QUERY = ('select %s from yahoo.finance.historicaldata where symbol = "%s" and startDate="%s" and endDate="%s"' % (fields,
                 self.object.name, startDate, endDate))
         res = urllib.request.urlopen(self.get_url(QUERY))

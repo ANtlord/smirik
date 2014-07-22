@@ -1,4 +1,4 @@
-var MONTH_NAMES = ['янв', 'фев', 'март', 'апр', 'май', 'июнь', 'июль', 'авг', 'сент', 'окт', 'ноя', 'дек'];
+var MONTH_NAMES = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
 angular.module('App.Controllers', []).
     controller('StockCtrl', ['$scope', '$http', function($scope, $http){
         $scope.message = "Загрузка...";
@@ -33,7 +33,7 @@ angular.module('App.Controllers', []).
                     var BASE_URL = "https://query.yahooapis.com/v1/public/yql?q=";
                     var ADDITIONAL_PARAMS = ("&format=json&diagnostics=true&env="
                         +"store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=");
-                    var FIELDS = "Symbol,Date,Close";
+                    var FIELDS = "Symbol,Date,Close,Adj_Close";
                     var date = new Date();
                     var END_DATE = date.toISOString().substring(0, 10);
                     var YEAR_MONTHS = 12;
@@ -64,7 +64,7 @@ angular.module('App.Controllers', []).
                                         // Represent data to object, which has fields named by dates.
                                         var KEY = data['query']['results']['quote'][i]['Symbol'];
                                         var DATE = data['query']['results']['quote'][i]['Date'];
-                                        var PRICE = data['query']['results']['quote'][i]['Close'];
+                                        var PRICE = data['query']['results']['quote'][i]['Adj_Close'];
                                         
                                         if ((DATE in items) == false){
                                             items[DATE] = 0;
@@ -80,10 +80,10 @@ angular.module('App.Controllers', []).
                                 then(function(data){
                                     ++counter;
                                     // After all downloadings programm will build plot.
-                                    if (counter == $scope.stocks.length-1) {
+                                    if (counter == $scope.stocks.length) {
                                         // Build data for building plot.
-                                        var xCaptions = [];
-                                        var i=0;
+                                        $scope.tableDates = [];
+                                        $scope.tablePrices = [];
                                         var c=0;
                                         var monthNum = null;
                                         var points = [];
@@ -97,10 +97,10 @@ angular.module('App.Controllers', []).
                                             var month = key.substring(5,7);
                                             if (monthNum == null || monthNum != month) {
                                                 monthNum = month;
-                                                xCaptions.push(
+                                                $scope.tablePrices.unshift(Number( (items[key]).toFixed(2) ));
+                                                $scope.tableDates.unshift(
                                                     [itemsSize-1-c, MONTH_NAMES[monthNum-1] + " - " + key.substring(0,4)]
                                                 );
-                                                //++i;
                                             }
                                             ++c;
                                         }
@@ -108,21 +108,17 @@ angular.module('App.Controllers', []).
                                         // Builds plot.
                                         jQuery.plot(jQuery('#portfolio-plot-base'), [points], {
                                             xaxis: {
-                                                ticks: xCaptions
+                                                ticks: $scope.tableDates
                                             }
                                         });
                                     }
+
                                 });
                         }
-                        console.log(url);
-                        
                     }
-
-                    
                 });
         }
         getStocks();
-
         $scope.currentStockID = null;
 
         $scope.addStock = function(){
@@ -162,10 +158,10 @@ angular.module('App.Controllers', []).
                     var max = null;
                     var N = data.length;
                     for (var i=0; i<N; ++i){
-                        points.push([i, data[N-1-i].Close]);
+                        points.push([i, data[N-1-i].Adj_Close]);
                         if (i%3 == 0) xCaptions.push([i, data[N-1-i].Date]);
-                        if (max == null) max = data[i].Close;
-                        else if (max < data[i].Close) max = data[i].Close;
+                        if (max == null) max = data[i].Adj_Close;
+                        else if (max < data[i].Adj_Close) max = data[i].Adj_Close;
                     }
                     jQuery.plot(jQuery('#plot-base'), [points], {
                         yaxis: {

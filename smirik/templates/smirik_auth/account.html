@@ -54,7 +54,9 @@
             </form>
         </div>
         {% verbatim %}
-        <div id="plot-base" style="height: 300px;"></div>
+        <div id="plot-base" style="height: 300px;">
+            <h1 align="center" class="text-muted">Выберите сток для его истории</h1>
+        </div>
         <div class="plot-times i-hide">
             <ul class="i-clear-list i-padding0 date-list">
                 <li class="i-left date-list_item" ng-repeat="item in months">
@@ -67,7 +69,17 @@
         </div>
         <div>
             <h2>История стоимости Вашего портфеля</h2>
+            <h3>График</h3>
             <div id="portfolio-plot-base" style="height: 300px;"></div>
+            <h3>Таблица значений</h3>
+            <table class="table">
+                <tr>
+                    <th ng-repeat="item in tableDates">{{ item[1] }}</th>
+                </tr>
+                <tr>
+                    <td ng-repeat="item in tablePrices">{{ item }}</td>
+                </tr>
+            </table>
         </div>
         {% endverbatim %}
     </div>
