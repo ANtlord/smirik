@@ -16,25 +16,27 @@ import datetime
 
 STOCK_FIELDS = ['Ask', 'Change', 'Open', 'DaysHigh', 'DaysLow']
 
-class StockCreateView(UserFormViewMixin, CreateView):
-    """Class for creation stock"""
-    form_class = StockForm
-    template_name = 'empty.html'
-
+class JsonFormViewMixin(object):
     def form_valid(self, form):
-        res = super(StockCreateView, self).form_valid(form)
+        res = super(JsonFormViewMixin, self).form_valid(form)
         return HttpResponse('OK')
 
     def form_invalid(self, form):
-        res = super(StockCreateView, self).form_invalid(form)
+        res = super(JsonFormViewMixin, self).form_invalid(form)
         return HttpResponse(json.dumps(form._errors),
                 'application/json; charset=UTF-8')
+
+
+class StockCreateView(UserFormViewMixin, JsonFormViewMixin, CreateView):
+    """Class for creation stock"""
+    form_class = StockForm
+    template_name = 'empty.html'
 
     def get_success_url(self):
         return '/account/'
 
 
-class StockDeleteView(DeleteView):
+class StockDeleteView(DeleteView, JsonFormViewMixin):
     model = Stock
         
     def get_success_url(self):
@@ -69,26 +71,29 @@ class APIMixin(object):
         return result_array
 
 
-    def parse_response_for_object_list(self, response):
+    def parse_response_for_object_list(self, json_res):
         """Method parses response from YAHOO
 
-        :response: @byte array, must be json valid.
+        :json_res: @byte array, must be json valid.
         :returns: @array of object, which have been parsed from resonse.
         """
         result_array = []
-        response_dict = json.loads(response.decode('utf-8'))
+        response_dict = json.loads(json_res.decode('utf-8'))
         if type(response_dict['query']['results']['quote']) == dict:
-            response_dict['query']['results']['quote'].update({
+            item = response_dict['query']['results']['quote']
+            item.update({
                 'Symbol' : self.object_list[0].name,
-                'pk' : self.object_list[0].pk
+                'pk' : self.object_list[0].pk,
+                'count': self.object_list[0].count
             })
-            result_array.append(response_dict['query']['results']['quote'])
+            result_array.append(item)
         # Parsing list of objects.
         else:
             i=0
             for item in response_dict['query']['results']['quote']:
                 item['Symbol'] = self.object_list[i].name
                 item['pk'] = self.object_list[i].pk
+                item['count'] = self.object_list[i].count
                 i+=1
                 result_array.append(item)
         return result_array
@@ -109,24 +114,26 @@ class StockListView(UserViewMixin, ListView, APIMixin):
     def get(self, request, *args, **kwargs):
         super(StockListView, self).get(request, *args, **kwargs)
         symbols = []    # symbols of stocks.
-        for item in self.object_list:
-            symbols.append(item.name)
+        if len(self.object_list) != 0:
+            for item in self.object_list:
+                symbols.append(item.name)
 
-        # Serializing for sending to request.
-        symbols_str = '", "'.join(symbols)
-        symbols_str = '("%s")' % symbols_str
+            # Serializing for sending to request.
+            symbols_str = '", "'.join(symbols)
+            symbols_str = '("%s")' % symbols_str
 
-        fields = ', '.join(STOCK_FIELDS)
+            fields = ', '.join(STOCK_FIELDS)
 
-        # Build query string and receive response.
-        QUERY = "select %s from yahoo.finance.quotes where symbol in %s" % (fields, symbols_str)
-        res = urllib.request.urlopen(self.get_url(QUERY))
-        json_res = res.read()
+            # Build query string and receive response.
+            QUERY = "select %s from yahoo.finance.quotes where symbol in %s" % (fields, symbols_str)
+            res = urllib.request.urlopen(self.get_url(QUERY))
+            json_res = res.read()
 
-        # Parse incoming data for frontend.
-        result_array = self.parse_response_for_object_list(json_res)
-        return HttpResponse(json.dumps(result_array), 'application/json; charset=UTF-8')
-    
+            # Parse incoming data for frontend.
+            result_array = self.parse_response_for_object_list(json_res)
+            return HttpResponse(json.dumps(result_array), 'application/json; charset=UTF-8')
+        else:
+            return HttpResponse(json.dumps([]), 'application/json; charset=UTF-8')
 
     def get_queryset(self, **kwargs):
         qs = super(StockListView, self).get_queryset(**kwargs)

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.core.validators import MinValueValidator
 User = get_user_model()
 
 
@@ -9,8 +11,10 @@ class Stock(models.Model):
         verbose_name = u'Элемент портфолио'
         verbose_name_plural = u'Элементы портфолио'
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(User, related_name='items')
+    count = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __unicode__(self):
         return self.name

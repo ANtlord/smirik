@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 {% block content %}
 <h1>Личный кабинет {{ object }}</h1>         
-<h2>Ваше портфолио</h2>
+<h2>Ваш портфель</h2>
 <div ng-app="App">
     <div ng-controller="StockCtrl">
         {% verbatim %}
@@ -45,7 +45,8 @@
         <div class="form-inline">
             <form action="{% url 'stock_create' %}" class="stock-form" method="post">
                 {% csrf_token %}
-                {% render_field form.name|add_class:"form-control" %}
+                {% render_field form.name|add_class:"form-control" placeholder="Символ компании" %}
+                {% render_field form.count|add_class:"form-control" placeholder="Количество" %}
                 <button class="btn btn-success stock-form_btn" ng-click="addStock()"
                     onClick="return false;">
                     Добавить
@@ -64,10 +65,12 @@
                 </li>
             </ul>
         </div>
+        <div>
+            <h2>История стоимости Вашего портфеля</h2>
+            <div id="portfolio-plot-base" style="height: 300px;"></div>
+        </div>
         {% endverbatim %}
     </div>
-    
-    
 </div>
 
 {% endblock content %}

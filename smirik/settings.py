@@ -28,16 +28,16 @@ ALLOWED_HOSTS = []
 
 DATABASES = None
 SOUTH_TESTS_MIGRATE = False
-if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'mydatabase'
-        }
-    }
-    CELERY_ALWAYS_EAGER = True
-else:
-    DATABASES = {
+#if 'test' in sys.argv:
+    #DATABASES = {
+        #'default': {
+            #'ENGINE': 'django.db.backends.sqlite3',
+            #'NAME': 'mydatabase'
+        #}
+    #}
+    #CELERY_ALWAYS_EAGER = True
+#else:
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'smirik',                      # Or path to database file if using sqlite3.
@@ -86,13 +86,6 @@ WSGI_APPLICATION = 'smirik.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

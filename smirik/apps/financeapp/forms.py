@@ -6,4 +6,4 @@ class StockForm(UserFormMixin, forms.ModelForm):
     """class for managing creation and updating of stocks."""
     class Meta:
         model = Stock
-        fields = ['name']
+        exclude = ['created_at', 'user']
