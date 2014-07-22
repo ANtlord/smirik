@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth import forms as base
 from django.contrib.auth import get_user_model
+from django import forms
 User = get_user_model()
 
 class UserFormMixin(object):
@@ -15,10 +16,21 @@ class UserCreationForm(base.UserCreationForm):
     auth_error = None
     password = None
 
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        try:
+            User._default_manager.get(username=username)
+        except User.DoesNotExist:
+            return username
+        raise forms.ValidationError(
+            self.error_messages['duplicate_username'],
+            code='duplicate_username',
+        )
+
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ('username', 'first_name', 'last_name')
 
 class UserChangeForm(base.UserChangeForm):
     class Meta:
-        model = get_user_model()
+        model = User
