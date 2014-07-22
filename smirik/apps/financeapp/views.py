@@ -23,6 +23,8 @@ class JsonFormViewMixin(object):
 
     def form_invalid(self, form):
         res = super(JsonFormViewMixin, self).form_invalid(form)
+        if not 'name' in form._errors: form._errors['name'] = []
+        form._errors['name'].append(form._errors['__all__'])
         return HttpResponse(json.dumps(form._errors),
                 'application/json; charset=UTF-8')
 
