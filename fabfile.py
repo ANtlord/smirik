@@ -20,11 +20,11 @@ env.use_ssh_config = True
 env.hosts = ['onetap@one-tap.ru']
 env.path = BASE_DIR+".venv/bin/activate"
 
-root_dir = '/www/smirik/'
+root_dir = '/www/smirik'
 PRODUCTION = {
         'root_dir': root_dir,
         'env_script': '%s/.venv/bin/activate' % root_dir,
-        'libs': '%s/.venv/lib/python2.7/site-packages/' % root_dir,
+        'libs': '%s/.venv/lib/python3.4/site-packages/' % root_dir,
 }
 
 activate = env.path
@@ -44,20 +44,20 @@ def update():
         run("git pull origin master")
 
     #Update markup.
-    proj_dir = os.path.abspath(__file__)
-    with cd(os.path.join(proj_dir, PROJECT_NAME, 'static', 'markup')):
-        local("git push origin master")
+    #proj_dir = os.path.abspath(__file__)
+    #with cd(os.path.join(proj_dir, PROJECT_NAME, 'static', 'markup')):
+        #local("git push origin master")
 
-    with cd(os.path.join(PRODUCTION['root_dir'], PROJECT_NAME, 'static', 'markup')):
-        run("git pull origin master")
+    #with cd(os.path.join(PRODUCTION['root_dir'], PROJECT_NAME, 'static', 'markup')):
+        #run("git pull origin master")
 
 
 def backup():
     with cd(PRODUCTION['root_dir']):
-        command = "`DJANGO_SETTINGS_MODULE=%s.settings python2.7 -c" % PROJECT_NAME
+        command = "`DJANGO_SETTINGS_MODULE=%s.settings python3 -c" % PROJECT_NAME
         addition_path = "import sys; sys.path.insert(0, '%s');" % PRODUCTION['root_dir']
         addition_path += " import site; site.addsitedir('%s')" % PRODUCTION['libs']
-        base_str = "%s \"%s; from django.conf import settings as sts; print sts.DATABASES['default']" % (command,
+        base_str = "%s \"%s; from django.conf import settings as sts; print(sts.DATABASES['default'])" % (command,
                 addition_path)
         user = "%s['USER']\"`" % base_str
         name = "%s['NAME']\"`" % base_str

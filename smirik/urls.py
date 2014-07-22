@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^', include('smirik.apps.smirik_auth.urls')),
     url(r'^', include('smirik.apps.financeapp.urls')),
     url(r'^ckeditor/', include('ckeditor.urls')),
+    url(r'^', include('smirik.apps.pages.urls')),
 )
