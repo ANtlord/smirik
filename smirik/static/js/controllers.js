@@ -44,6 +44,7 @@ angular.module('App.Controllers', []).
                     var companies = [];
                     //var strCompanies = '';
                     var items = {}; // Is container for data for points.
+                    var itemsSize = 0; // Is container for data for points.
                     var counter = 0;
                     if ($scope.stocks != null) {
                         // Get data and calculate it for every stock.
@@ -65,7 +66,10 @@ angular.module('App.Controllers', []).
                                         var DATE = data['query']['results']['quote'][i]['Date'];
                                         var PRICE = data['query']['results']['quote'][i]['Close'];
                                         
-                                        if ((DATE in items) == false) items[DATE] = 0;
+                                        if ((DATE in items) == false){
+                                            items[DATE] = 0;
+                                            ++itemsSize;
+                                        }
                                         items[DATE] += parseFloat(PRICE);
                                     }
 
@@ -85,9 +89,8 @@ angular.module('App.Controllers', []).
                                         var points = [];
                                         var max = null;
                                         // Calculate sum by fields.
-                                        var N = items.length-1;
                                         for (var key in items) {
-                                            points.push([c, items[key]]);
+                                            points.push([itemsSize-1-c, items[key]]);
                                             if (max == null || max < items[key]) max = items[key];
 
                                             // Create captions by months for x axis of plot.
@@ -95,7 +98,7 @@ angular.module('App.Controllers', []).
                                             if (monthNum == null || monthNum != month) {
                                                 monthNum = month;
                                                 xCaptions.push(
-                                                    [c, MONTH_NAMES[monthNum-1] + " - " + key.substring(0,4)]
+                                                    [itemsSize-1-c, MONTH_NAMES[monthNum-1] + " - " + key.substring(0,4)]
                                                 );
                                                 //++i;
                                             }
